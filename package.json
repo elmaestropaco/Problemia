@@ -1,0 +1,13 @@
+{
+  "name": "problemia",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generador local de problemas matemáticos de Primaria y ESO",
+  "scripts": {
+    "test": "node verify-release.cjs",
+    "test:arithmetic": "node verify.cjs",
+    "test:advanced": "node verify-advanced.cjs",
+    "test:reading": "node verify-reading.cjs"
+  },
+  "devDependencies": { "playwright": "1.63.0" }
+}

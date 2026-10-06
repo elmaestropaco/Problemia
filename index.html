@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#246b5b" />
+  <meta name="author" content="Francisco Serrano Jiménez - El Maestro Paco" />
+  <meta name="description" content="Problemia: generador local de problemas matemáticos de 1.º de Primaria a 2.º de ESO." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <title>Problemia · Problemas que hacen pensar</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegación principal">
+      <div class="brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M44 15H20L32 32 20 49H44V44H29L38 32 29 20H44Z" fill="currentColor"/></svg></span><span>Problemia</span></div>
+      <p class="eyebrow side-label">Tu aula, tus retos</p>
+      <nav class="main-nav">
+        <button class="nav-item active" data-view="home"><span>⌂</span> Inicio</button>
+        <button class="nav-item" data-view="generator"><span>✦</span> Crear problemas</button>
+        <button class="nav-item" data-view="library"><span>▤</span> Mis materiales</button>
+        <button class="nav-item" data-view="board"><span>□</span> Pizarra</button>
+        <button class="nav-item" id="settingsButton" aria-label="Ajustes"><span aria-hidden="true">⚙</span> Ajustes</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-utilities"><span class="save-status" id="saveStatus" role="status">Todo guardado</span><button class="icon-button" id="helpButton" title="Ayuda" aria-label="Ayuda">?</button></div>
+        <div class="offline-pill"><span class="status-dot"></span><span>Guardado en este dispositivo</span></div>
+        <p class="sidebar-note">Sin cuentas. Sin datos del alumnado. Tus materiales se quedan aquí.</p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="icon-button" id="mobileMenuButton" aria-label="Abrir menú" aria-expanded="false">☰</button>
+        <div class="mobile-brand"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M44 15H20L32 32 20 49H44V44H29L38 32 29 20H44Z" fill="currentColor"/></svg></span> Problemia</div>
+        <button class="icon-button" id="mobileSettingsButton" aria-label="Ajustes">⚙</button>
+      </header>
+
+      <section class="view active" id="homeView">
+        <div class="hero-grid">
+          <div class="hero-copy">
+            <h1>Problemas que hacen<br /><em>pensar.</em></h1>
+            <p class="hero-lede">Crea retos matemáticos ajustados a cada curso, llévalos a la pizarra y convierte cada operación en una conversación.</p>
+            <div class="hero-actions"><button class="button primary" data-view="generator">Crear un problema <span>→</span></button><button class="text-button" data-view="board">Abrir pizarra <span>↗</span></button></div>
+          </div>
+          <div class="hero-visual" aria-hidden="true"><div class="sun"></div><div class="orb orb-a">×</div><div class="orb orb-b">÷</div><div class="orb orb-c">+</div><div class="chalk-card"><span class="tiny-label">RETO DEL DÍA</span><strong>¿Cuántas formas<br />encuentras?</strong><div class="chalk-line"></div><small>24 fichas · 3 soluciones posibles</small></div><div class="scribble">x + 7 = 19</div></div>
+        </div>
+        <div class="section-heading"><div><p class="eyebrow">EMPIEZA POR AQUÍ</p><h2>Un espacio para cada momento</h2></div></div>
+        <div class="feature-grid">
+          <button class="feature-card mint" data-view="generator"><span class="feature-icon">✦</span><span class="feature-title">Crear problema</span><span class="feature-desc">Genera uno o una colección con tus reglas.</span><span class="feature-arrow">↗</span></button>
+          <button class="feature-card peach" data-view="board"><span class="feature-icon">□</span><span class="feature-title">Modo pizarra</span><span class="feature-desc">Piensa, escribe y comparte en gran formato.</span><span class="feature-arrow">↗</span></button>
+          <button class="feature-card lavender" data-view="library"><span class="feature-icon">▤</span><span class="feature-title">Mis materiales</span><span class="feature-desc">Reúne tus fichas y problemas favoritos.</span><span class="feature-arrow">↗</span></button>
+        </div>
+        <div class="recent-section"><div class="section-heading compact"><div><p class="eyebrow">TU ESPACIO</p><h2>Lo último que has creado</h2></div><button class="text-button" data-view="library">Ver todo <span>→</span></button></div><div id="recentMaterials" class="recent-list"></div></div>
+      </section>
+
+      <section class="view" id="generatorView">
+        <div class="page-intro"><div><p class="eyebrow">GENERADOR</p><h1>Crea un nuevo reto</h1><p>Configura el tipo de pensamiento que quieres despertar hoy.</p></div><div class="template-count"><strong id="templateCount">27</strong><span>contextos del banco aritmético</span></div></div>
+        <div class="generator-layout">
+          <form class="generator-panel" id="generatorForm">
+            <div class="form-section"><div class="form-heading"><span class="step">01</span><div><h3>La base</h3><p>¿Para quién y con qué intensidad?</p></div></div><div class="field-row"><label>Curso<select id="grade"><option value="P1">1.º Primaria</option><option value="P2">2.º Primaria</option><option value="P3" selected>3.º Primaria</option><option value="P4">4.º Primaria</option><option value="P5">5.º Primaria</option><option value="P6">6.º Primaria</option><option value="E1">1.º ESO</option><option value="E2">2.º ESO</option></select></label><label>Dificultad<select id="difficulty"><option value="easy">Fácil</option><option value="medium" selected>Medio</option><option value="hard">Difícil</option><option value="challenge">Reto</option></select></label></div></div>
+            <div class="form-section"><div class="form-heading"><span class="step">02</span><div><h3>El enfoque</h3><p>Elige las herramientas que puede necesitar.</p></div></div><fieldset class="chip-group" id="operations"><legend>Operaciones y contenidos permitidos</legend><label class="choice-chip checked"><input type="checkbox" value="add" checked /><span>+</span> Sumar</label><label class="choice-chip checked"><input type="checkbox" value="subtract" checked /><span>−</span> Restar</label><label class="choice-chip"><input type="checkbox" value="multiply" /><span>×</span> Multiplicar</label><label class="choice-chip"><input type="checkbox" value="divide" /><span>÷</span> Dividir</label><label class="choice-chip"><input type="checkbox" value="decimal" /><span>0,5</span> Decimales</label><label class="choice-chip"><input type="checkbox" value="fraction" /><span>½</span> Fracciones</label><label class="choice-chip"><input type="checkbox" value="percent" /><span>%</span> Porcentajes</label><label class="choice-chip"><input type="checkbox" value="measure" /><span>↔</span> Medidas</label><label class="choice-chip"><input type="checkbox" value="geometry" /><span>□</span> Geometría</label><label class="choice-chip"><input type="checkbox" value="proportion" /><span>∝</span> Proporcionalidad</label><label class="choice-chip"><input type="checkbox" value="divisibility" /><span>∣</span> Divisibilidad</label><label class="choice-chip"><input type="checkbox" value="power" /><span>²</span> Potencias</label><label class="choice-chip"><input type="checkbox" value="equation" /><span>x</span> Ecuaciones</label><label class="choice-chip"><input type="checkbox" value="logic" /><span>?</span> Lógica</label></fieldset><label>Tipo de reto<select id="problemType"><option value="context">Problema contextualizado</option><option value="challenge">Reto de razonamiento</option><option value="mix">Mezcla equilibrada</option></select></label></div>
+            <div class="form-section"><div class="form-heading"><span class="step">03</span><div><h3>La sesión</h3><p>Una pregunta para empezar o una colección.</p></div></div><div class="field-row"><label>Cantidad<select id="quantity"><option>1</option><option>5</option><option selected>10</option><option>15</option><option>20</option></select></label><label>Temática<select id="theme"><option value="varied">Variada</option><option value="classroom">Aula</option><option value="nature">Naturaleza</option><option value="sport">Deporte</option><option value="shopping">Compras</option><option value="travel">Excursiones</option></select></label></div><div class="advanced-toggle"><span>Más ajustes</span><button type="button" id="advancedToggle" aria-expanded="false">Mostrar <span>⌄</span></button></div><div class="advanced-fields" id="advancedFields"><label>Texto<select id="textLength"><option value="short">Breve</option><option value="standard" selected>Estándar</option><option value="long">Detallado</option></select></label><label class="switch-label"><input type="checkbox" id="balanced" checked /><span class="switch"></span> Repartir tipos de problema</label></div></div>
+            <button class="button primary full" type="submit">Generar problemas <span>✦</span></button>
+          </form>
+          <aside class="tip-card"><span class="tip-star">✦</span><h3>Una buena mezcla</h3><p>Combina operaciones y contextos para que cada problema invite a elegir una estrategia, no solo a aplicar una fórmula.</p><div class="tip-rule"></div><span class="tip-caption">IDEA PARA EL AULA</span></aside>
+        </div>
+      </section>
+
+      <section class="view" id="resultsView">
+        <div class="page-intro results-intro"><div><p class="eyebrow">TU COLECCIÓN</p><h1 id="resultsTitle">10 retos para 3.º de Primaria</h1><p id="resultsSubtitle">Listos para revisar, guardar o llevar a la pizarra.</p></div><div class="results-actions"><button class="button secondary" id="saveWorksheet">Guardar ficha</button><button class="button secondary" id="downloadWorksheet">PDF ficha</button><button class="button secondary" id="downloadAnswers">PDF solucionario</button><button class="button primary" id="openBoard">Abrir pizarra <span>↗</span></button></div></div>
+        <div class="results-toolbar"><span id="resultCount">10 problemas</span><div><label class="language-picker">Idioma <select id="translationLanguage"><option value="es">Español</option><option value="en">English</option><option value="fr">Français</option><option value="ar">العربية</option></select></label><button class="toolbar-button" id="translateProblems">Traducir</button><button class="toolbar-button" id="regenerateAll">↻ Regenerar todo</button><button class="toolbar-button" id="printWorksheet">▣ Imprimir ficha</button></div></div><div id="problemList" class="problem-list"></div>
+      </section>
+
+      <section class="view" id="libraryView"><div class="page-intro"><div><p class="eyebrow">BIBLIOTECA</p><h1>Mis materiales</h1><p>Todo lo que guardas, a mano y sin salir de tu dispositivo.</p></div><button class="button secondary" id="exportData">Exportar copia</button></div><div class="library-tabs"><button class="active" data-library-tab="all">Todo</button><button data-library-tab="worksheets">Fichas</button><button data-library-tab="favorites">Favoritos</button></div><div id="libraryList" class="library-list"></div></section>
+
+      <section class="view board-view" id="boardView"><div class="board-top"><div><p class="eyebrow">MODO PIZARRA</p><h1 id="boardTitle">Una pizarra para pensar en voz alta</h1></div><div class="board-controls"><button class="toolbar-button" id="clearBoard">Borrar trazos</button><button class="button secondary" id="exitBoard">Salir</button></div></div><div class="board-stage"><div class="board-problem"><span class="tiny-label">PROBLEMA <span id="boardCounter">1 / 1</span></span><h2 id="boardStatement">Genera una colección para comenzar.</h2><div class="board-data" id="boardData"></div></div><div class="canvas-toolbar"><button class="draw-tool active" data-tool="pen">✎</button><button class="draw-tool" data-tool="marker">▰</button><input type="color" id="penColor" value="#17243b" title="Color" /><input type="range" id="penWidth" min="2" max="16" value="4" title="Grosor" /><button class="draw-tool" id="undoStroke">↶</button><button class="draw-tool" id="redoStroke">↷</button><span class="canvas-hint">Escribe aquí tus ideas</span></div><div class="writing-grid"><section class="writing-zone"><header><span>01</span><strong>Datos</strong><small>Lo que sabemos</small></header><canvas data-area="data"></canvas></section><section class="writing-zone operations-zone"><header><span>02</span><strong>Operaciones</strong><small>Cómo lo resolvemos</small></header><canvas data-area="operations"></canvas></section><section class="writing-zone answer-zone"><header><span>03</span><strong>Solución</strong><small>Respuesta final</small></header><canvas data-area="answer"></canvas></section></div><div class="board-footer"><button class="text-button" id="showHint">Mostrar pista <span>→</span></button><div><button class="round-button" id="prevProblem">←</button><button class="round-button" id="nextProblem">→</button></div></div></div><div id="hintPanel" class="hint-panel hidden"></div></section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <dialog id="settingsDialog" aria-labelledby="settingsTitle">
+    <button class="dialog-close" id="closeSettings" aria-label="Cerrar ajustes">×</button>
+    <p class="eyebrow">PREFERENCIAS DEL DISPOSITIVO</p><h2 id="settingsTitle">Ajustes</h2>
+    <form id="settingsForm">
+      <label>Letra de los enunciados<select id="readingFont"><option value="print">Letra de imprenta</option><option value="school">Letra escolar ligada</option></select></label>
+      <p id="fontPreview" class="font-preview">¿Cuántos libros quedan en la biblioteca?</p>
+      <label>Tamaño de lectura<select id="readingSize"><option value="normal">Normal</option><option value="large">Ampliado</option></select></label>
+      <label>Velocidad de lectura en voz alta<select id="readingRate"><option value="0.75">Lenta</option><option value="0.9">Normal</option><option value="1.1">Rápida</option></select></label>
+      <label class="settings-check"><input type="checkbox" id="highContrast"> Mayor contraste</label>
+      <p class="dialog-note">Se guardan automáticamente en este navegador. La tipografía escolar se aplica a los enunciados, a la pizarra y a los PDF. El árabe utiliza su propia fuente.</p>
+    </form>
+  </dialog>
+  <dialog id="helpDialog"><button class="dialog-close" id="closeHelp">×</button><p class="eyebrow">SOBRE PROBLEMIA</p><h2>Herramientas sencillas para problemas con sentido.</h2><p>Problemia genera problemas matemáticos reproducibles a partir de estructuras verificadas. Las soluciones se calculan en el código, no se inventan.</p><p class="dialog-note">Tus materiales y trazos se guardan únicamente en este navegador. Si limpias los datos del sitio, desaparecerán.</p></dialog>
+  <script src="vendor/jspdf.umd.min.js"></script>
+  <script src="font-data.js"></script>
+  <script src="app.js"></script>
+  <script src="app-fix.js"></script>
+  <script src="learning-profile.js"></script>
+  <script src="problem-engine.js"></script>
+  <script src="early-reading-bank.js"></script>
+  <script src="story-bank.js"></script>
+  <script src="advanced-bank.js"></script>
+  <script src="logic-bank.js"></script>
+  <script src="reasoning.js"></script>
+  <script src="materials.js"></script>
+  <script src="languages.js"></script>
+  <script src="offline.js"></script>
+  <script src="release.js"></script>
+</body>
+</html>
