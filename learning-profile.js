@@ -17,6 +17,6 @@
     return {...p,rank,max:p.limits[rank],targetSteps:Math.max(arithmetic.length,p.steps[rank]),custom:c.operations.some(op=>op!=='logic'&&!p.recommended.includes(op))||(c.allowNegative&&['P1','P2','P3','P4','P5','P6'].includes(c.grade))};
   };
   const tip=document.createElement('p');tip.id='profileExplanation';tip.className='profile-explanation';document.getElementById('difficulty').closest('.field-row').after(tip);
-  function update(){const c=config(),p=getLearningProfile(c);tip.textContent=`${p.custom?'Configuración personalizada. ':''}Referencia: cantidades hasta ${p.max.toLocaleString('es-ES')} y unos ${p.targetSteps} pasos. ${c.type==='challenge'?'Se pedirá justificar, comprobar o reconstruir la solución.':'Las operaciones son las que has marcado.'}`;}
+  function update(){const c=config(),p=getLearningProfile(c);tip.textContent=`${p.custom?'Configuración personalizada. ':''}Referencia: cantidades hasta ${p.max.toLocaleString('es-ES')} y unos ${p.targetSteps} pasos. ${c.operationMode==='mixed'?'Las opciones marcadas se repartirán entre los problemas.':c.type==='challenge'?'Se pedirá justificar, comprobar o reconstruir la solución.':'Cada problema utilizará las operaciones marcadas.'}`;}
   document.getElementById('generatorForm').addEventListener('change',update);update();
 })();

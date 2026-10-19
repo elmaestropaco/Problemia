@@ -7,7 +7,7 @@
     {id:'camp',theme:'travel',unit:'barritas de cereales',place:'el campamento',actor:'La organización del campamento',pack:'cajas',destination:'para las rutas del fin de semana',receive:'El supermercado entrega',remove:'Se consumen',group:'bolsas de comida',goal:'¿Cuántas barritas quedan para las rutas?'},
     {id:'hostel',theme:'travel',unit:'toallas',place:'el albergue',actor:'El albergue',pack:'paquetes',destination:'para las habitaciones',receive:'La lavandería devuelve',remove:'Se apartan',group:'lotes',goal:'¿Cuántas toallas hay disponibles?'},
     {id:'station',theme:'travel',unit:'mapas',place:'la oficina de turismo',actor:'La oficina de turismo',pack:'paquetes',destination:'para las personas visitantes',receive:'La imprenta trae',remove:'Se entregan',group:'lotes',goal:'¿Cuántos mapas quedan en la oficina?'},
-    {id:'science',theme:'classroom',unit:'tubos de ensayo',place:'el laboratorio del instituto',actor:'El laboratorio',pack:'cajas',destination:'para las prácticas de ciencias',receive:'El proveedor entrega',remove:'Se apartan',group:'equipos de trabajo',goal:'¿Cuántos tubos de ensayo quedan para las prácticas?'},
+    {id:'science',theme:'classroom',unit:'tubos de ensayo',place:'el laboratorio del instituto',actor:'El laboratorio',pack:'cajas',destination:'para las prácticas de ciencias',receive:'El proveedor entrega',remove:'Se apartan',group:'cajas de material',goal:'¿Cuántos tubos de ensayo quedan para las prácticas?'},
     {id:'art',theme:'classroom',unit:'pinceles',place:'el taller de plástica',actor:'El taller de plástica',pack:'estuches',destination:'para los talleres del trimestre',receive:'Una asociación dona',remove:'Se reservan',group:'estuches',goal:'¿Cuántos pinceles quedan disponibles?'},
     {id:'music',theme:'classroom',unit:'partituras',place:'la escuela de música',actor:'La escuela de música',pack:'carpetas',destination:'para los ensayos',receive:'La copistería entrega',remove:'Se prestan',group:'carpetas',goal:'¿Cuántas partituras quedan en la escuela?'},
     {id:'robotics',theme:'classroom',unit:'piezas de construcción',place:'el taller de robótica',actor:'El taller de robótica',pack:'cajas',destination:'para construir los prototipos',receive:'El proveedor envía',remove:'Se reservan',group:'kits',goal:'¿Cuántas piezas quedan para los prototipos?'},
@@ -17,7 +17,7 @@
     {id:'recycling',theme:'nature',unit:'tapones',place:'el punto de recogida',actor:'El punto de recogida',pack:'bolsas',destination:'para una campaña de reciclaje',receive:'Una escuela entrega',remove:'Se apartan',group:'sacos',goal:'¿Cuántos tapones quedan para la campaña?'},
     {id:'swim',theme:'sport',unit:'gorros de natación',place:'la piscina municipal',actor:'La piscina municipal',pack:'cajas',destination:'para los cursillos',receive:'El proveedor entrega',remove:'Se entregan',group:'lotes',goal:'¿Cuántos gorros quedan para los cursillos?'},
     {id:'athletics',theme:'sport',unit:'dorsales',place:'el club de atletismo',actor:'El club de atletismo',pack:'paquetes',destination:'para la carrera popular',receive:'La imprenta entrega',remove:'Se asignan',group:'sobres',goal:'¿Cuántos dorsales quedan sin asignar?'},
-    {id:'tennis',theme:'sport',unit:'pelotas de tenis',place:'la escuela de tenis',actor:'La escuela de tenis',pack:'botes',destination:'para las clases',receive:'Un patrocinador dona',remove:'Se retiran',group:'botes',goal:'¿Cuántas pelotas quedan disponibles?'},
+    {id:'tennis',theme:'sport',unit:'pelotas de tenis',place:'la escuela de tenis',actor:'La escuela de tenis',pack:'cajas',destination:'para las clases',receive:'Un patrocinador dona',remove:'Se retiran',group:'bolsas',goal:'¿Cuántas pelotas quedan disponibles?'},
     {id:'stadium',theme:'sport',unit:'pulseras de acceso',place:'el polideportivo',actor:'El polideportivo',pack:'paquetes',destination:'para el torneo escolar',receive:'La organización recibe',remove:'Se entregan',group:'sobres',goal:'¿Cuántas pulseras quedan por entregar?'},
     {id:'bakery',theme:'shopping',unit:'magdalenas',place:'la pastelería',actor:'La pastelería',pack:'bandejas',destination:'para la venta de hoy',receive:'El obrador prepara',remove:'Se venden',group:'cajas de regalo',goal:'¿Cuántas magdalenas quedan por vender?'},
     {id:'hardware',theme:'shopping',unit:'tornillos',place:'la ferretería',actor:'La ferretería',pack:'cajas',destination:'para atender los pedidos',receive:'El proveedor entrega',remove:'Se venden',group:'bolsas',goal:'¿Cuántos tornillos quedan en el almacén?'},
@@ -51,58 +51,53 @@
     const a=pick(2,Math.max(3,Math.floor(scale))),n=pick(2,Math.min(profile.factor,rank===0?5:12)),b=pick(2,Math.max(3,Math.floor(scale/3))),r=pick(1,Math.max(2,Math.floor(a/3))),d=pick(2,Math.min(profile.factor,rank===0?5:12));
     let tree=leaf(a,'existencias'),sentences=[],structure=form.id,grouped=false,unit=ctx.unit;
     const variant=pick(0,5);
-    const initial=value=>[
-      `En ${ctx.place} hay ${value} ${ctx.unit} ${ctx.destination}.`,
-      `${ctx.actor} dispone de ${value} ${ctx.unit} ${ctx.destination}.`,
-      `Antes de empezar la jornada, en ${ctx.place} quedan ${value} ${ctx.unit}.`,
-      `${ctx.actor} cuenta ${value} ${ctx.unit} en el almacén.`,
-      `Para atender las necesidades de esta semana, ${ctx.place} dispone de ${value} ${ctx.unit}.`,
-      `El inventario de ${ctx.place} registra ${value} ${ctx.unit} ${ctx.destination}.`
-    ][variant];
-    const incoming=value=>[`${ctx.receive} ${value} ${ctx.unit} más.`,`Llega un nuevo pedido de ${value} ${ctx.unit}.`,`Se añaden ${value} ${ctx.unit} al material disponible.`,`Esta mañana llegan ${value} ${ctx.unit} adicionales.`,`Un segundo envío contiene ${value} ${ctx.unit}.`,`A esas existencias se suman ${value} ${ctx.unit} de otro pedido.`][variant];
-    const take=value=>[`${ctx.remove} ${value} ${ctx.unit}.`,`De esa cantidad, ${value} ${ctx.unit} se destinan a otra actividad.`,`Se apartan ${value} ${ctx.unit} y se trabaja con el resto.`,`Para el día siguiente se guardan ${value} ${ctx.unit}.`,`Se entregan ${value} ${ctx.unit} de las existencias disponibles.`,`Una parte del material, ${value} ${ctx.unit}, se envía a otra sede.`][variant];
+    const initial=value=>StoryLanguage.opening(ctx,value,variant,c.textLength);
+    const incoming=value=>StoryLanguage.receive(ctx,value,variant);
+    const take=value=>StoryLanguage.take(ctx,value,variant);
+    const item=value=>StoryLanguage.q(ctx,value),pack=StoryLanguage.packs[ctx.pack]||'paquete';
+    const arrival=ctx.place.startsWith('el ')?'Al '+ctx.place.slice(3):'A '+ctx.place;
     if(form.id==='reconstruct-initial'&&has('add')&&has('subtract')&&!has('multiply')&&!has('divide')){
       tree=branch('subtract',branch('add',leaf(a,'existencias finales'),leaf(r,'salidas')),leaf(Math.min(b,a-2),'entradas'));
-      sentences.push(`Al cerrar la jornada, en ${ctx.place} quedan ${a} ${ctx.unit}. Durante el día se habían entregado ${r} ${ctx.unit} y se habían recibido ${Math.min(b,a-2)} más.`);
+      sentences.push(`Al cerrar, en ${ctx.place} quedan ${item(a)}. Durante el día se han entregado ${item(r)} y se han recibido ${Math.min(b,a-2)} más.`);
     }else if(form.id==='compare-orders'&&has('multiply')&&has('subtract')&&!has('divide')){
       const first=branch('multiply',leaf(a,'contenido primer pedido'),leaf(n,'recipientes primer pedido'));
       const second=branch('multiply',leaf(Math.max(2,Math.floor(a/2)),'contenido segundo pedido'),leaf(n-1,'recipientes segundo pedido'));
       tree=branch('subtract',first,second);
-      sentences.push(`${ctx.actor} prepara dos pedidos: el primero lleva ${n} ${ctx.pack} con ${a} ${ctx.unit} por recipiente y el segundo lleva ${n-1} ${ctx.pack} con ${Math.max(2,Math.floor(a/2))} ${ctx.unit} por recipiente.`);
+      sentences.push(`${ctx.actor} recibe dos pedidos. El primero trae ${n} ${ctx.pack} con ${item(a)} en cada ${pack}. El segundo trae ${n-1} ${ctx.pack} con ${item(Math.max(2,Math.floor(a/2)))} en cada ${pack}.`);
       if(has('add')){tree=branch('add',tree,leaf(b,'ampliación primer pedido'));sentences.push(`Al primer pedido se añaden ${b} ${ctx.unit}.`)}
     }else if(form.id==='double-consumption'&&has('multiply')&&has('subtract')){
       const total=a*n+r;tree=branch('subtract',leaf(total,'almacén'),branch('multiply',leaf(a,'consumo por equipo'),leaf(n,'equipos')));
-      sentences.push(initial(total),`Participan ${n} equipos y cada uno utiliza ${a} ${ctx.unit}.`);
+      sentences.push(initial(total),`Para otra actividad se preparan ${n} bolsas con ${item(a)} en cada una. Esas bolsas se llevan a otra sala.`);
       if(has('add')){tree=branch('add',tree,leaf(b,'reposición'));sentences.push(incoming(b))}
     }else if(form.id==='per-container'&&has('multiply')){
-      sentences.push(`${ctx.actor} prepara ${n} ${ctx.pack}. Cada recipiente contiene ${a} ${ctx.unit}.`);
-      if(has('add')){tree=branch('add',tree,leaf(b,'añadidos por recipiente'));sentences.push(`A cada recipiente se añaden ${b} ${ctx.unit}.`)}
-      if(has('subtract')){tree=branch('subtract',tree,leaf(r,'retirados por recipiente'));sentences.push(`De cada recipiente se retiran ${r} ${ctx.unit}.`)}
-      tree=branch('multiply',tree,leaf(n,'recipientes'));sentences.push('Se reúne el contenido que queda en todos los recipientes.');
+      sentences.push(`${ctx.actor} tiene ${n} ${ctx.pack} con ${item(a)} en cada ${pack}.`);
+      if(has('add')){tree=branch('add',tree,leaf(b,'añadidos por recipiente'));sentences.push(`En cada ${pack} ponen ${item(b)} más.`)}
+      if(has('subtract')){tree=branch('subtract',tree,leaf(r,'retirados por recipiente'));sentences.push(`De cada ${pack} se ${r===1?'entrega':'entregan'} ${item(r)} a otro grupo.`)}
+      tree=branch('multiply',tree,leaf(n,'recipientes'));
     }else if(form.id==='two-reserves'&&has('add')&&has('subtract')){
-      if(has('multiply')){tree=branch('multiply',leaf(a,'contenido'),leaf(n,'paquetes'));sentences.push(`${ctx.actor} recibe ${n} ${ctx.pack} con ${a} ${ctx.unit} en cada recipiente.`)}else sentences.push(initial(a));
+      if(has('multiply')){tree=branch('multiply',leaf(a,'contenido'),leaf(n,'paquetes'));sentences.push(StoryLanguage.shipment(ctx,n,a))}else sentences.push(initial(a));
       const reserves=branch('add',leaf(r,'primera reserva'),leaf(b,'segunda reserva'));tree=branch('subtract',tree,reserves);
-      sentences.push(`Se reservan ${r} ${ctx.unit} para una actividad y ${b} para otra. Ambas reservas salen de esas existencias.`);
+      sentences.push(`Guardan ${item(r)} para la mañana y ${item(b)} para la tarde. No usarán esas reservas ahora.`);
     }else if(form.id==='two-sources'&&has('add')){
       const first=has('multiply')?branch('multiply',leaf(a,'contenido'),leaf(n,'paquetes')):leaf(a,'primera aportación');
       const second=has('multiply')?branch('multiply',leaf(b,'contenido'),leaf(n+1,'paquetes')):leaf(b,'segunda aportación');
       tree=branch('add',first,second);
-      sentences.push(has('multiply')?`${ctx.actor} recibe dos pedidos: uno de ${n} ${ctx.pack} con ${a} ${ctx.unit} por recipiente y otro de ${n+1} ${ctx.pack} con ${b} ${ctx.unit} por recipiente.`:`En ${ctx.place} llegan ${a} ${ctx.unit} en un pedido y ${b} en otro. Se juntan los dos pedidos.`);
+      sentences.push(has('multiply')?`${ctx.actor} recibe ${n} ${ctx.pack} con ${item(a)} en cada ${pack}. Otro pedido trae ${n+1} ${ctx.pack} con ${item(b)} en cada ${pack}.`:`${arrival} llegan dos pedidos: uno con ${item(a)} y otro con ${item(b)}.`);
       if(has('subtract')){tree=branch('subtract',tree,leaf(r,'retirada'));sentences.push(take(r))}
     }else if(form.id==='remaining-delivery'&&has('add')&&has('subtract')){
       const delivery=has('multiply')?branch('multiply',leaf(b,'contenido'),leaf(n,'paquetes')):leaf(b,'pedido');
       tree=branch('add',leaf(a,'almacén'),branch('subtract',delivery,leaf(Math.min(r,b-1),'retirada del pedido')));
-      sentences.push(initial(a));sentences.push(has('multiply')?`Llega un pedido de ${n} ${ctx.pack} con ${b} ${ctx.unit} en cada recipiente.`:`Llega un pedido de ${b} ${ctx.unit}.`);
-      sentences.push(`Antes de guardar el pedido, se apartan ${Math.min(r,b-1)} ${ctx.unit}. El resto se suma a las existencias anteriores.`);
+      sentences.push(initial(a));sentences.push(has('multiply')?StoryLanguage.shipment(ctx,n,b):`Llega un pedido de ${b} ${ctx.unit}.`);
+      sentences.push(`Del pedido se llevan ${item(Math.min(r,b-1))} a otra sala. Lo que sobra se guarda junto a lo que ya había.`);
     }else if(form.id==='shared-first'&&has('divide')&&(has('add')||has('subtract'))){
       const total=a*d;tree=branch('divide',leaf(total,'total'),leaf(d,'destinatarios'));sentences.push(`${ctx.actor} distribuye ${total} ${ctx.unit} por igual entre ${d} equipos.`);
       if(has('add')){tree=branch('add',tree,leaf(b,'adicionales por equipo'));sentences.push(`Cada equipo recibe además ${b} ${ctx.unit}.`)}
       if(has('subtract')){tree=branch('subtract',tree,leaf(r,'consumidos por equipo'));sentences.push(`Cada equipo utiliza ${r} ${ctx.unit}.`)}
-      if(has('multiply')){tree=branch('multiply',tree,leaf(n,'equipos'));sentences.push(`Se reúne el material que queda en ${n} de esos equipos.`);if(n>d)return null;}
+      if(has('multiply')){tree=branch('multiply',tree,leaf(n,'equipos'));sentences.push(has('subtract')?`Se junta el material que les queda a ${n} de esos equipos.`:`Se junta el material de ${n} de esos equipos.`);if(n>d)return null;}
       grouped=true;
     }else{
       structure='delivery-stock';
-      if(has('multiply')){tree=branch('multiply',leaf(a,'contenido'),leaf(n,'paquetes'));sentences.push(`${ctx.actor} recibe ${n} ${ctx.pack} con ${a} ${ctx.unit} en cada recipiente.`)}else sentences.push(initial(a));
+      if(has('multiply')){tree=branch('multiply',leaf(a,'contenido'),leaf(n,'paquetes'));sentences.push(StoryLanguage.shipment(ctx,n,a))}else sentences.push(initial(a));
       if(has('add')){tree=branch('add',tree,leaf(b,'adicionales'));sentences.push(incoming(b))}
       if(has('subtract')){tree=branch('subtract',tree,leaf(r,'retirada'));sentences.push(take(r))}
     }
@@ -110,23 +105,31 @@
     const comparison=structure==='compare-orders'&&has('multiply')&&has('subtract')&&!has('divide');
     const target=profile.targetSteps;
     const extensible=selected.filter(op=>op==='add'||op==='subtract');
+    const extraEvents=[];
     let extension=0;
     if(extensible.length&&!inverse&&!comparison){
       while(solveCount(tree)+(has('divide')&&!grouped?1:0)<Math.min(target,6)){
         const op=extensible[extension%extensible.length],draw=pick(2,Math.max(3,Math.floor(scale/4))),amount=op==='subtract'?Math.min(draw,solve(tree,[])-2):draw;
         if(amount<2)break;
         tree=branch(op,tree,leaf(amount,'ajuste adicional'));
-        const scope=grouped&&!has('multiply')?'Cada equipo':ctx.actor;
-        sentences.push(op==='add'?`${scope} recibe ${amount} ${ctx.unit} de un envío adicional.`:`${scope} guarda ${amount} ${ctx.unit} para la próxima jornada; esa reserva no se incluye en el material disponible.`);
+        const scope=grouped?(has('multiply')?`El grupo formado por esos ${n} equipos`:'Cada equipo'):ctx.actor;
+        extraEvents.push({op,amount,scope});
         extension++;
       }
     }
-    if(has('divide')&&!grouped){tree=branch('divide',tree,leaf(d,'unidades por grupo'));sentences.push(`Con el material que queda se preparan ${ctx.group} de ${d} ${ctx.unit}.`);unit=ctx.group;}
+    for(let start=0;start<extraEvents.length;){
+      let end=start+1;while(end<extraEvents.length&&extraEvents[end].op===extraEvents[start].op)end++;
+      const run=extraEvents.slice(start,end),subject=run[0].scope,amounts=run.map(e=>item(e.amount));
+      const list=amounts.length===1?amounts[0]:amounts.slice(0,-1).join(', ')+' y '+amounts.at(-1);
+      sentences.push(run[0].op==='add'?`${subject} recibe además ${run.length===1?'otro envío con '+list:'otros envíos: uno con '+amounts.slice(0,-1).join(', otro con ')+' y otro con '+amounts.at(-1)}.`:`${subject} separa ${list} para ${run.length===1?'otra clase':'distintas clases'}. Ese material no se usará ahora.`);
+      start=end;
+    }
+    const removed=has('subtract'),reserved=structure==='two-reserves'||extraEvents.some(event=>event.op==='subtract')||removed&&variant%3===1&&['delivery-stock','two-sources'].includes(structure);
+    if(has('divide')&&!grouped){tree=branch('divide',tree,leaf(d,'unidades por grupo'));sentences.push(`Con ${removed?'el material que queda':'todo el material'} se preparan ${ctx.group} de ${d} ${ctx.unit}.`);unit=ctx.group;}
     const steps=[],value=solve(tree,steps);if(!acceptable(c,steps)||steps.some(s=>Math.abs(s.result)>profile.max||Math.abs(s.left)>profile.max||Math.abs(s.right)>profile.max))return null;
     if(selected.some(op=>!steps.some(s=>s.op===op)))return null;
     const remainder=steps.at(-1).op==='divide'?steps.at(-1).remainder:0;
-    let question=has('divide')&&!grouped?`¿Cuántos grupos completos se pueden preparar?${remainder?` ¿Qué cantidad de ${ctx.unit} sobra?`:''}`:grouped&&!has('multiply')?`¿Qué cantidad de ${ctx.unit} le queda a cada equipo?`:inverse?`¿Qué cantidad de ${ctx.unit} había al comenzar la jornada?`:comparison?`¿Qué cantidad de ${ctx.unit} más lleva el primer pedido respecto al segundo?`:ctx.goal;
-    if(grouped&&has('multiply'))question=`¿Qué cantidad de ${ctx.unit} se reúne entre esos ${n} equipos?`;
+    let question=has('divide')&&!grouped?StoryLanguage.groupQuestion(ctx,remainder):inverse?`¿${StoryLanguage.count(ctx)} había al abrir?`:comparison?`¿${StoryLanguage.count(ctx)} más trae el primer pedido que el segundo?`:StoryLanguage.question(ctx,{removed,reserved,grouped,combined:has('multiply'),teams:n});
     if(value<0||!Number.isFinite(value))return null;
     return{id:uid(),template:`${structure}:${selected.join('-')}`,structure,contextId:ctx.id,topic:'Problema de '+steps.length+' pasos',grade:c.grade,theme:ctx.theme,statement:[...sentences,question].join(' '),answer:remainder?`${value} grupos; sobran ${remainder} ${ctx.unit}`:value,unit:remainder?'':unit,steps:steps.map(s=>`${s.left} ${symbol[s.op]} ${s.right} = ${s.result}${s.remainder?`, resto ${s.remainder}`:''}`),operations:selected,hint:'Distingue las cantidades por recipiente de las cantidades totales. Identifica qué se reserva y qué se reparte.',mathematicalModel:{tree,steps,answer:value},createdAt:new Date().toISOString(),favorite:false};
   }

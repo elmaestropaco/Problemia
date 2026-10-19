@@ -25,7 +25,9 @@ Sustituye los archivos modificados. Si cambias los recursos de la aplicación, c
 
 ## Alcance del generador
 
-Los cursos y dificultades usan referencias orientativas, no una certificación curricular. Elegir contenidos que todavía no corresponden al curso activa una configuración personalizada. Cada problema aritmético utiliza todas las operaciones marcadas; en los contenidos especializados hay operaciones propias del tema, como multiplicar para hallar un área.
+Los cursos y dificultades usan referencias orientativas, no una certificación curricular. Elegir contenidos que todavía no corresponden al curso activa una configuración personalizada. En «Todas en cada problema», cada problema aritmético utiliza todas las operaciones marcadas. En «Repartir y mezclar en la colección», las opciones se distribuyen entre problemas de una o varias operaciones. La preferencia se guarda en el navegador. Los contenidos especializados pueden necesitar operaciones propias del tema, como multiplicar para hallar un área.
+
+Para asegurar que todas las opciones aparezcan en una ficha mezclada, pide al menos tantos problemas como opciones hayas marcado: si marcas cinco, pide cinco o más problemas. Esto también se garantiza al desactivar el reparto equilibrado. Las combinaciones incompatibles muestran un aviso; no se eliminan opciones de forma silenciosa.
 
 Se permite un tema principal especializado por problema, combinado con decimales, fracciones, porcentajes y las cuatro operaciones. La aplicación avisa si se mezclan varios temas principales incompatibles. El selector de divisiones enteras regula cociente y resto en los problemas aritméticos; los contenidos especializados calculan racionales exactos.
 

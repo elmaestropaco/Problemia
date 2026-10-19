@@ -36,6 +36,7 @@
       text=`Una lista empieza por ${a}, ${a+b}, ${a+b+second}. Se suma ${b}, luego ${second}, y se repiten esos dos pasos en ese orden. ¿Qué número estará en el lugar ${position}?`;
       explanation='Marca los pasos por parejas para no cambiar el orden de las dos reglas.';
     }
+    tree.contents=['logic'];
     const steps=[],answer=AdvancedBank.solve(tree,steps);
     if(steps.some(s=>Math.abs(s.result.n/s.result.d)>p.max))return null;
     if(!c.allowCarries&&steps.some(s=>['add','subtract'].includes(s.op)&&ProblemEngine.hasCarry(s.left.n,s.right.n,s.op==='subtract')))return null;
@@ -44,7 +45,7 @@
   }
   window.generate=function(c){
     if(c.operations.length!==1||c.operations[0]!=='logic')return previous(c);
-    const result=[],seen=new Set();for(let i=0;i<5000&&result.length<c.quantity;i++){const p=build(c,i);if(p&&!seen.has(p.statement)){result.push(p);seen.add(p.statement)}}
+    const result=[],seen=new Set();for(let i=0;i<5000&&result.length<c.quantity;i++){const p=build(c,i+(c.variantOffset||0));if(p&&!seen.has(p.statement)){result.push(p);seen.add(p.statement)}}
     if(result.length<c.quantity)throw Error('Los filtros de lógica son demasiado restrictivos. Permite llevadas o reduce la cantidad.');return result;
   };
   window.LogicBank={build};

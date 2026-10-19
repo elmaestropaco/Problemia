@@ -8,7 +8,20 @@
   <meta name="description" content="Problemia: generador local de problemas matemáticos de 1.º de Primaria a 2.º de ESO." />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
   <title>Problemia · Problemas que hacen pensar</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=20261019" />
+  <script>
+    // El HTML se renueva por red; comprueba también el código guardado sin conexión.
+    if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)){
+      const previousController=navigator.serviceWorker.controller;let refreshing=false,interacted=false;
+      for(const event of ['pointerdown','input','keydown'])document.addEventListener(event,()=>{interacted=true},{once:true});
+      navigator.serviceWorker.addEventListener('controllerchange',()=>{
+        if(!previousController||refreshing)return;refreshing=true;
+        if(!interacted){location.reload();return}
+        const button=document.createElement('button');button.id='updateApplicationButton';button.type='button';button.className='button primary';button.textContent='Actualización lista · Recargar';button.style.cssText='position:fixed;top:12px;right:12px;z-index:100';button.addEventListener('click',()=>location.reload());document.body.append(button);
+      });
+      navigator.serviceWorker.getRegistration().then(registration=>registration?.update()).catch(()=>{});
+    }
+  </script>
 </head>
 <body>
   <div class="app-shell">
@@ -91,20 +104,23 @@
     </form>
   </dialog>
   <dialog id="helpDialog"><button class="dialog-close" id="closeHelp">×</button><p class="eyebrow">SOBRE PROBLEMIA</p><h2>Herramientas sencillas para problemas con sentido.</h2><p>Problemia genera problemas matemáticos reproducibles a partir de estructuras verificadas. Las soluciones se calculan en el código, no se inventan.</p><p class="dialog-note">Tus materiales y trazos se guardan únicamente en este navegador. Si limpias los datos del sitio, desaparecerán.</p></dialog>
-  <script src="vendor/jspdf.umd.min.js"></script>
-  <script src="font-data.js"></script>
-  <script src="app.js"></script>
-  <script src="app-fix.js"></script>
-  <script src="learning-profile.js"></script>
-  <script src="problem-engine.js"></script>
-  <script src="early-reading-bank.js"></script>
-  <script src="story-bank.js"></script>
-  <script src="advanced-bank.js"></script>
-  <script src="logic-bank.js"></script>
-  <script src="reasoning.js"></script>
-  <script src="materials.js"></script>
-  <script src="languages.js"></script>
-  <script src="offline.js"></script>
-  <script src="release.js"></script>
+  <script src="vendor/jspdf.umd.min.js?v=20261019"></script>
+  <script src="font-data.js?v=20261019"></script>
+  <script src="app.js?v=20261019"></script>
+  <script src="app-fix.js?v=20261019"></script>
+  <script src="learning-profile.js?v=20261019"></script>
+  <script src="problem-engine.js?v=20261019"></script>
+  <script src="early-reading-bank.js?v=20261019"></script>
+  <script src="story-language.js?v=20261019"></script>
+  <script src="story-bank.js?v=20261019"></script>
+  <script src="advanced-language.js?v=20261019"></script>
+  <script src="advanced-bank.js?v=20261019"></script>
+  <script src="logic-bank.js?v=20261019"></script>
+  <script src="reasoning.js?v=20261019"></script>
+  <script src="generation-planner.js?v=20261019"></script>
+  <script src="materials.js?v=20261019"></script>
+  <script src="languages.js?v=20261019"></script>
+  <script src="offline.js?v=20261019"></script>
+  <script src="release.js?v=20261019"></script>
 </body>
 </html>

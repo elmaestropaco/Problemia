@@ -10,7 +10,7 @@
   $('#editForm').addEventListener('submit',event=>{
     event.preventDefault();const p=editing||{id:uid(),grade:$('#grade').value,topic:'Problema propio',template:'manual',createdAt:new Date().toISOString()};
     p.statement=cleanSpanish($('#editStatement').value);p.answer=$('#editAnswer').value.trim();p.unit='';p.steps=$('#editSteps').value.split('\n').filter(s=>s.trim());p.validation=$('#manualReviewed').checked?'manual-reviewed':'needs-review';p.language='es';p.hint='Revisa los datos del problema.';
-    delete p.originalStatement;delete p.originalSteps;delete p.localizations;delete p.mathematicalModel;delete p.exactAnswer;
+    delete p.originalStatement;delete p.originalSteps;delete p.localizations;delete p.mathematicalModel;delete p.exactAnswer;delete p.verifiedOperations;
     if(!editing){state.problems.push(p);state.data.materials.push({id:uid(),type:'worksheet',title:'Problema propio',grade:p.grade,problems:[structuredClone(p)],createdAt:p.createdAt});}
     for(const m of state.data.materials){const index=m.problems.findIndex(item=>item.id===p.id);if(index>=0)m.problems[index]=structuredClone(p);}
     persist();$('#editDialog').close();renderResults();toast(p.validation==='needs-review'?'Borrador guardado: falta revisar la solución.':'Problema revisado y guardado.');

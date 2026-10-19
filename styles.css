@@ -23,5 +23,6 @@
 .author-credit a{color:inherit;text-decoration:none}
 .author-credit a:hover{text-decoration:underline}
 .combined-expression{overflow-wrap:anywhere;font-family:inherit}
+.operation-mode-label{display:block;margin-top:20px}.operation-mode-label select{max-width:100%}
 @media print{.author-credit{display:none}}
 @media print{.solution,.language-note{display:none!important}body::after{content:'© 2026 Francisco Serrano Jiménez - El Maestro Paco';display:block;font-size:9px;margin-top:16px}}

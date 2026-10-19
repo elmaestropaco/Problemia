@@ -11,7 +11,7 @@
   document.getElementById('closeSettings').addEventListener('click',()=>document.getElementById('settingsDialog').close());
   document.getElementById('settingsForm').addEventListener('change',()=>{state.data.reading={font:document.getElementById('readingFont').value,size:document.getElementById('readingSize').value,rate:Number(document.getElementById('readingRate').value),contrast:document.getElementById('highContrast').checked};applyReading();persist()});
   const saved = state.data.preferences || state.data.lastConfig;
-  const fields={grade:'grade',difficulty:'difficulty',quantity:'quantity',theme:'theme',type:'problemType',textLength:'textLength',divisionMode:'divisionMode',allowCarries:'allowCarries',allowNegative:'allowNegative',balanced:'balanced'};
+  const fields={grade:'grade',difficulty:'difficulty',quantity:'quantity',theme:'theme',type:'problemType',operationMode:'operationMode',textLength:'textLength',divisionMode:'divisionMode',allowCarries:'allowCarries',allowNegative:'allowNegative',balanced:'balanced'};
   if(saved){for(const [key,id] of Object.entries(fields)){const el=document.getElementById(id);if(el&&saved[key]!==undefined){if(el.type==='checkbox')el.checked=saved[key];else el.value=String(saved[key]);}}if(saved.operations)document.querySelectorAll('#operations input').forEach(el=>{el.checked=saved.operations.includes(el.value);el.parentElement.classList.toggle('checked',el.checked)});}
   document.getElementById('generatorForm').addEventListener('change',()=>{state.data.preferences=config();persist()});
   const originalShowView=showView;

@@ -6,6 +6,23 @@ Webapp estática para GitHub Pages, de 1.º de Primaria a 2.º de ESO. Publica l
 
 Consulta [PUBLICAR.md](PUBLICAR.md) para subirla a GitHub Pages y [REVISION.md](REVISION.md) para las pruebas de la entrega.
 
+## Actualización del 19 de octubre: redacción y mezcla
+
+Revisión posterior: las preguntas distinguen totales, retiradas, reservas y repartos. Los envases se nombran de forma concreta («cada caja», «cada bolsa») y los ejemplos de tenis usan cajas en lugar de botes con cantidades poco creíbles. `npm run test:stories` comprueba las nueve estructuras y los veinte contextos del banco, además de los tres ejemplos comunicados. La caché actual es `problemia-local-v6`.
+
+En el generador, «Cómo combinar lo marcado» ofrece dos opciones persistentes:
+
+- **Todas en cada problema**: todas las opciones marcadas deben aparecer en cada modelo, incluidas selecciones compatibles de cuatro o cinco opciones. Se comprueban los pasos aritméticos y las partes del modelo que trabajan cada contenido; no basta con una etiqueta.
+- **Repartir y mezclar en la colección**: usa lo marcado como repertorio; alterna problemas de una sola operación y combinaciones de varias, sin juntar temas principales incompatibles. Cuando hay al menos tantos problemas como opciones, se cubren todas, también con el reparto equilibrado desactivado. Si pides menos problemas, pueden no aparecer todas. En dificultad alta se admiten combinaciones de hasta cinco opciones compatibles en un mismo problema; no es obligatorio que todos las contengan.
+
+Las operaciones intrínsecas de un contenido siguen siendo necesarias: un área puede requerir multiplicar aunque solo hayas marcado Geometría. La dificultad no amplía el repertorio seleccionado.
+
+`story-language.js` redacta las acciones de los contextos aritméticos; `advanced-language.js` conserva referentes como precio, papel, cinta o tiempo en los contenidos especializados. `generation-planner.js` distribuye las opciones sin cambiar las soluciones de los modelos. Los primeros cursos mantienen su banco de lectura breve.
+
+Ejecuta `npm run test:planner` para comprobar el reparto, la persistencia y las regresiones de redacción. Los textos ya guardados no se modifican automáticamente.
+
+`npm run test:selection` comprueba específicamente selecciones de cuatro y cinco opciones en ambos modos, el uso de las cuatro operaciones aritméticas, el reparto sin equilibrio y el rechazo de etiquetas sin evidencia en el modelo. Si una combinación o los filtros impiden trabajar todo lo pedido, se muestra un error en lugar de eliminar opciones silenciosamente.
+
 ## Qué ofrece
 
 - Problemas aritméticos con todas las operaciones elegidas, 27 contextos, modelos con ramas y controles de números, llevadas y divisiones.
